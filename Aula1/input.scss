@@ -1,0 +1,46 @@
+
+$color-box:#ccc;
+
+.box {
+    border: 1px solid $color-box;
+}
+
+.foo {
+    background: orange;
+
+    p {
+        color: blue;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+}
+
+html {
+    font-size: (0.5em/1);
+}
+
+%alert {
+    border: 10px solid gray;
+    padding: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.user-dialog-box{
+    @extend %alert;
+}
+
+.alert-winning-user {
+    @extend %alert;
+    border-color: green;
+}
+
+@mixin dialog-box($color-border) {
+    border: 10px solid $color-border;
+}
+
+.alert-winning-user {
+    @include dialog-box(green);
+    padding: 10px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
