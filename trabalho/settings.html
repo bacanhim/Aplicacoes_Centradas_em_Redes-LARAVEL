@@ -1,37 +1,37 @@
 <ons-page>
-    <h2>Settings</h2>
-    <ons-page>
-      <ons-list>
-        <ons-list-header>Settings</ons-list-header>
-        <ons-list-item>
-          <div class="center">
-            massa
-          </div>
-          <div class="right">
-            <ons-switch checked id="first"></ons-switch>
-          </div>
-        </ons-list-item>
-        <ons-list-item>
-          <div class="center">
-            atum
-          </div>
-          <div class="right">
-            <ons-switch id="second" checked></ons-switch>
-          </div>
-        </ons-list-item>
-      </ons-list>
-    </ons-page>
-
-
-    <script>
-      document.querySelector('ons-switch').addEventListener('change', function () {
-          var id = document.getElementById("first");
-          if (id.checked == false) {
-            document.getElementById('second').setAttribute('disabled');
-          } else {
-            document.getElementById('second').removeAttribute('disabled');
-          }
-      })
-    </script>
-
+  <h2>Settings</h2>
+  <ons-page>
+    <ons-list>
+      <ons-list-header>Settings</ons-list-header>
+      <ons-list-item>
+        <div class="center">
+          massa
+        </div>
+        <div class="right">
+          <ons-switch checked id="first"></ons-switch>
+        </div>
+      </ons-list-item>
+      <ons-list-item>
+        <div class="center">
+          atum
+        </div>
+        <div class="right">
+          <ons-switch id="second" checked></ons-switch>
+        </div>
+      </ons-list-item>
+    </ons-list>
   </ons-page>
+
+
+  <script>
+    document.getElementById('first').addEventListener('change', function (e) {
+      if (e.value) {
+        document.getElementById('second').disabled = false;
+      } else {
+        document.getElementById('second').checked = false;
+        document.getElementById('second').disabled = true;
+      }
+    })
+  </script>
+
+</ons-page>

@@ -1,31 +1,33 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
   <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
   <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
   <!--script src="https://unpkg.com/jquery/dist/jquery.min.js"></script-->
 </head>
+
 <body>
-    
+
   <ons-navigator id="myNavigator">
     <ons-page>
       <ons-toolbar>
         <div class="center">Navigator+Tabbar</div>
       </ons-toolbar>
-  
+
       <ons-tabbar position="auto" swipeable>
         <ons-tab icon="ion-card" label="Cards" badge="3" page="cards.html"></ons-tab>
         <ons-tab icon="ion-ios-cog" label="Settings" page="./settings.html"></ons-tab>
       </ons-tabbar>
     </ons-page>
   </ons-navigator>
- 
+
   <template id="cards.html">
-    
+
     <ons-page>
-        <ons-pull-hook id="pull-hook">
-          </ons-pull-hook>
+      <ons-pull-hook id="pull-hook">
+      </ons-pull-hook>
       <h2>Cards</h2>
       <ons-list-title>Card List</ons-list-title>
       <ons-list>
@@ -35,9 +37,10 @@
       </ons-list>
     </ons-page>
   </template>
- 
+
   <template id="item.html">
     <ons-page id="item">
+
       <h2>Items</h2>
       <ons-toolbar>
         <div class="left">
@@ -49,24 +52,43 @@
         <div class="title"></div>
         <div class="content">
           dsdsdsds
-
+          <ons-speed-dial position="bottom right" direction="up">
+            <ons-fab>
+              <ons-icon icon="md-share"></ons-icon>
+            </ons-fab>
+            <ons-speed-dial-item onclick="share('Twitter');">
+              <ons-icon icon="md-twitter"></ons-icon>
+            </ons-speed-dial-item>
+            <ons-speed-dial-item onclick="share('Facebook');">
+              <ons-icon icon="md-facebook"></ons-icon>
+            </ons-speed-dial-item>
+          </ons-speed-dial>
         </div>
       </ons-card>
       <p style="text-align: center">
-         
-          <ons-button onclick="app.showFromObject()">Actions</ons-button>
-        </p>
-        <template id="action-sheet.html">
-            <ons-action-sheet id="sheet" cancelable title="From template">
-              <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()">Label</ons-action-sheet-button>
-              <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()">Label</ons-action-sheet-button>
-              <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()" modifier="destructive">Label</ons-action-sheet-button>
-              <ons-action-sheet-button icon="md-close" onclick="app.hideFromTemplate()">Cancel</ons-action-sheet-button>
-            </ons-action-sheet>
-          </template>
+
+        <ons-button onclick="app.showFromObject()">Actions</ons-button>
+      </p>
+      <ons-gesture-detector>
+        <div id="detect-area" style="text-align:center;background-color: white;width: responsive; height: 60px;">
+          Swipe to Home
+        </div>
+      </ons-gesture-detector>
+      <template id="action-sheet.html">
+        <ons-action-sheet id="sheet" cancelable title="From template">
+          <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()">Label</ons-action-sheet-button>
+          <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()">Label</ons-action-sheet-button>
+          <ons-action-sheet-button icon="md-square-o" onclick="app.hideFromTemplate()" modifier="destructive">Label
+          </ons-action-sheet-button>
+          <ons-action-sheet-button icon="md-close" onclick="app.hideFromTemplate()">Cancel</ons-action-sheet-button>
+        </ons-action-sheet>
+
+      </template>
     </ons-page>
   </template>
+  <script src="app.js">
 
-<script src="app.js"></script>
+  </script>
 </body>
+
 </html>

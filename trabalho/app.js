@@ -6,12 +6,16 @@ document.addEventListener('init', function (event) {
 });
 
 var customPush2 = function (event) {
-  myNavigator.pushPage('item.html', { data: { cardTitle: event.target.textContent } })
+  myNavigator.pushPage('item.html', {
+    data: {
+      cardTitle: event.target.textContent
+    }
+  })
 };
-ons.ready(function() {
+ons.ready(function () {
   var pullHook = document.getElementById('pull-hook');
 
-  pullHook.addEventListener('changestate', function(event) {
+  pullHook.addEventListener('changestate', function (event) {
     var message = '';
 
     switch (event.state) {
@@ -29,14 +33,16 @@ ons.ready(function() {
     pullHook.innerHTML = message;
   });
 
-  pullHook.onAction = function(done) {
+  pullHook.onAction = function (done) {
     setTimeout(done, 1000);
   };
 });
 var app = {};
 
 ons.ready(function () {
-  ons.createElement('action-sheet.html', { append: true })
+  ons.createElement('action-sheet.html', {
+      append: true
+    })
     .then(function (sheet) {
       app.showFromTemplate = sheet.show.bind(sheet);
       app.hideFromTemplate = sheet.hide.bind(sheet);
@@ -59,5 +65,27 @@ app.showFromObject = function () {
         icon: 'md-close'
       }
     ]
-  }).then(function (index) { console.log('index: ', index) });
+  }).then(function (index) {
+    console.log('index: ', index)
+  });
 };
+document.addEventListener('swiperight', function (event) {
+  if (event.target.matches('#detect-area')) {
+    myNavigator.popPage();
+  }
+});
+var share = function (shareType) {
+  if (shareType == "Twitter") {
+    ons.notification.toast('Partilhado com sucesso no ' + shareType, {
+      timeout: 1000
+    });
+    document.querySelector('ons-speed-dial').toggleItems();
+  }
+
+  if (shareType == "Facebook") {
+    ons.notification.toast('Partilhado com sucesso no ' + shareType, {
+      timeout: 1000
+    });
+    document.querySelector('ons-speed-dial').toggleItems();
+  }
+}
