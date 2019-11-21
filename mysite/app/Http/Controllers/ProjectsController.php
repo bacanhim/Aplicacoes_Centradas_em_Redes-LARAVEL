@@ -95,4 +95,12 @@ class ProjectsController extends Controller
         $project->delete();
         return redirect('/projects');
     }
+    public function first(){
+        $project = Project::all()->first;
+        return view('projects.show',compact('project'));
+    }
+    public function last(){
+        $project = Project::last()->first;
+        return view('projects.show',compact('project'));
+    }
 }
