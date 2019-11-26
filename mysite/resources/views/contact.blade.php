@@ -2,8 +2,9 @@
 
 @section('title','Contact')
 @section('content')
-<h1>Contact</h1>
+<br>
+<h1><b>CONTACTO:</b></h1>
 <p>
-    It's me dimitri
+    IT'S ME, MIGUEL.
 </p>
 @endsection

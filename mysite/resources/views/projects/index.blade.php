@@ -1,31 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
 @extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Projects</title>
-</head>
+@section('content')
+<br>
+<h1><b>PROJETOS</b></h1>
+<br>
 
-<body>
-
-    <h1>PROJETOS</h1>
-
+<div class="control">
     <ul>
         @foreach ($projects as $project)
-        <li><b>{{ $project->title }}</b></li>
-        <li>{{ $project->description }}</li>
+        <li><a href="/projects/{{ $project->id }}">{{ $project->title }}</a></li>
         @endforeach
     </ul>
+</div>
+<br>
 
-    <div class="field">
-        <div class="control">
-            <a type="submit" class="button is-link" href="/projects/create">Create Project</a>
-        </div>
+<div class="field">
+    <div class="control">
+        <a href="/projects/create" class="button is-dark">ADD PROJETO</a>
     </div>
+</div>
 
-</body>
+<div class="field">
+    <div class="control">
+        <a href="/projects/first" class="button is-light">PRIMEIRO PROJETO</a>
+    </div>
+</div>
 
-</html>
+<div class="field">
+    <div class="control">
+        <a href="/projects/last" class="button is-light">ULTIMO PROJETO</a>
+    </div>
+</div>
+
+@endsection

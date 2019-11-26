@@ -1,106 +1,115 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Project;
-
 class ProjectsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(){
-        $projects=Project::all();
-        return view('projects.index',['projects'=>$projects]);
+    # LIST
+    public function index()
+        {
+            $projects = Project::where('owner_id', auth()->id())->get();
+            // select * from projects where owner_id = 2
+            return view('projects.index', ['projects' => $projects]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    # CREATE
     public function create()
     {
         return view('projects.create');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store() # recebe do form e guarda os dados na BD
     {
-        $projects=new Project;
-        $projects->title=request('title');
-        $projects->description=request('description');
-        $projects->save();
+        $validated = request()->validate([
+            'title' => ['required', 'min:2', 'max:255'],
+            'description' => 'required'
+        ]);
+        #return $validated;
+        $validated['owner_id'] = auth()->id();
+        Project::create($validated); # $validated or attributes
         return redirect('/projects');
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function storeAlt()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $project=Project::findOrFail($id);
-        return view('projects.edit',compact('project'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $project=Project::find($id);
-
-        $project->title=request('title');
-        $project->description=request('description');
-
+        #return request()->all();
+        #return request('title');
+        $project = new Project(); // criar novo
+        // atribuir dados
+        $project->title = request('title');
+        $project->description = request('title');
         $project->save();
         return redirect('/projects');
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    # EDIT / UPDATE
+    public function edit($id)
     {
-        $project=Project::find($id);
-        $project->delete();
+        #dd('hi'); # imprimir para debug
+        $project = Project::findOrFail($id);
+        return view('projects.edit', compact('project'));
+    }
+    public function update(Project $project) {
+        $validated = request()->validate([
+            'title' => ['required', 'min:3', 'max:200'],
+            'description' => 'required',
+        ]);
+        $project->update($validated);
         return redirect('/projects');
     }
-    public function first(){
-        $project = Project::all()->first;
-        return view('projects.show',compact('project'));
+    public function updateValAlt(Project $project) {
+        $project->update(
+            request()->validate([
+                'title' => 'required',
+                'description' => 'required',
+            ])
+        );
+        return redirect('/projects');
     }
-    public function last(){
-        $project = Project::last()->first;
-        return view('projects.show',compact('project'));
+    public function updateAlt(Project $project) {
+        $project->update(request(['title', 'description']));
+        return redirect('/projects');
+    }
+    public function updateAlt2($id) {
+        #dd(request()->all()); # debug: die and dump
+        $project = Project::find($id);
+        $project->title = request('title');
+        $project->description = request('description');
+        $project->save();
+        return redirect('/projects');
+    }
+    # DELETE
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id)->delete();
+        # OR
+        #$project = Project::findOrFail($id)
+        #$project->delete();
+        return redirect('/projects');
+    }
+    # SHOW
+    public function show($id)
+    {
+        $project = Project::findOrFail($id);
+        #return $project; # json
+        return view('projects.show', compact('project'));  # compact ou ['project' => $project]
+    }
+    public function showAlt(Project $project)
+    {
+        return view('projects.show', compact('project'));  # compact ou ['project' => $project]
+    }
+    # EXER
+    public function first()
+    {
+        $project = Project::all()->first(); # funciona sem all()
+        return view('projects.show', compact('project'));
+    }
+    public function last()
+    {
+        $project = Project::all()->last(); # tem de ter all()
+        #$project = Project::last()->get(); # alternativa
+        return view('projects.show', compact('project'));
+    }
+    public function __construct()
+    {
+        $this->middleware('auth');
+        // $this->middleware('auth')->only(['store', 'update']);
+        // $this->middleware('auth')->except(['show']);
     }
 }

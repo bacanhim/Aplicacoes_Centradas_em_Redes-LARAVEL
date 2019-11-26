@@ -3,9 +3,10 @@
 @section('title','Welcome')
 
 @section('content')
-<h1>Welcome</h1>
+<br>
+<h1><b>HEY Y'ALL</b></h1>
 <p>
-    It's me dimitri<br>
+    IT'S ME, MIGUEL.<br>
     {{$text}}<br>
     {{$title}}
 </p>

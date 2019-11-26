@@ -1,25 +1,49 @@
-<!DOCTYPE html>
 @extends('layout')
 
+@section('content')
 
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=form, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Creating</title>
-</head>
+<form method="POST" action="/projects">
+    {{ csrf_field() }}
 
-    <body>
+    <br>
+    <h1><b>CRIAR UM NOVO PROJETO</b></h1>
+    <br>
 
-    <h1>Create project</h1>
+    <!-- NOME DO PROJETO INPUT -->
+    <div class="field">
+        <label class="label">Nome do Projeto</label>
+        <div class="control">
+            <input type="text" name="title" class="input {{ $errors->has('title') ? 'is-danger' : '' }}"
+                placeholder="Project title" value="{{ old('title') }}" required>
+        </div>
+    </div>
 
-    <form method="POST" action="/projects">
-        {{ csrf_field() }}
-        <input type="text" name="title" ><br>
-        <textarea name="description" ></textarea><br>
-        <button type="submit">Create Project</button>
-    </form>
+    <!-- DESCRIÇÃO DO PROJETO INPUT -->
+    <div class="field">
+        <label class="label">Descrição</label>
+        <div class="control">
+            <textarea class="textarea" name="description" placeholder="Project description" required></textarea>
+        </div>
+    </div>
 
-    </body>
-</html>
+    <!-- BUTTON CRAIR PROJETO -->
+    <div class="field is-grouped">
+        <div class="control">
+            <button type="submit" class="button is-link is-light">CRIAR PROJETO</button>
+        </div>
+    </div>
+
+    <!-- VALITDATION CAMPOS -->
+    @if ($errors->any())
+    <div class="notification is-danger">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+
+</form>
+@endsection
